@@ -1,0 +1,11 @@
+model Review {
+    id         String   @id @default(uuid())
+    tenantId   String
+    tenant     User     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+    propertyId String
+    property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+    rating     Int      @db.Integer
+    review     String   @db.Text
+
+    @@map("reviews")
+}
