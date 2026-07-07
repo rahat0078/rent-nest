@@ -7,6 +7,7 @@ model Property {
     title       String   @db.VarChar(255)
     description String   @db.Text
     location    String   @db.VarChar(255)
+    isAvailable Boolean @default(true)
     bedrooms    Int      @db.SmallInt
     bathrooms   Int      @db.SmallInt
     rentAmount  Int      @db.Integer

@@ -11,6 +11,7 @@ import { adminRoute } from "./modules/admin/admin.routes";
 import { categoryRoute } from "./modules/category/category.routes";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { notFound } from "./middleware/notFound";
+import { reviewRoute } from "./modules/reviews/reviews.route";
 
 const app: Application = express();
 
@@ -33,9 +34,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/properties", propertiesRoute);
 app.use("/api/landlord", landlordRoute);
 app.use("/api/rentals", rentRequestRoute);
-app.use("/api/payment/rentals", paymentRoute);
+app.use("/api/payments", paymentRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/category", categoryRoute);
+app.use("/api/reviews", reviewRoute)
 
 
 app.use(notFound);
