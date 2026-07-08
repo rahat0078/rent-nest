@@ -2,6 +2,7 @@ import { Router } from "express";
 import { authController } from "./auth.controller";
 import RequestValidator from "../../middleware/requestValidator";
 import { userValidations } from "./auth.validation";
+import { auth } from "../../middleware/auth.middleware";
 
 const router = Router();
 
@@ -12,7 +13,6 @@ router.post(
 );
 router.post("/login", authController.loginUser);
 
-//? auth()
-router.get("/me", authController.getMyInfo);
+router.get("/me", auth(), authController.getMyInfo);
 
 export const authRoute = router;

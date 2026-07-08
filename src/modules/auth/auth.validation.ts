@@ -1,7 +1,11 @@
 import { z } from "zod";
 
 const registerUser = z.object({
-  name: z.string().trim(),
+  name: z
+    .string()
+    .trim()
+    .min(2, "Name is too short")
+    .max(255, "Phone number is too long"),
   email: z.string().trim().email("Invalid email address"),
   password: z
     .string()
