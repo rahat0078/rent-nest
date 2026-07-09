@@ -6,6 +6,8 @@ model Review {
     property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
     rating     Int      @db.Integer
     review     String   @db.Text
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 
     @@map("reviews")
 }

@@ -6,6 +6,6 @@ const router = Router();
 
 //?public route
 router.get("/", propertiesController.getAllProperties)
-router.get("/", propertiesController.getSingleProperty)
+router.get("/:id", propertiesController.getSingleProperty)
 
 export const propertiesRoute = router
