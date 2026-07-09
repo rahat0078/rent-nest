@@ -19,6 +19,7 @@ router.patch(
   RequestValidator(propertyValidation.updateProperty),
   landlordController.updateProperty,
 );
+
 router.get(
   "/properties/me",
   auth(Role.LANDLORD),
@@ -26,20 +27,21 @@ router.get(
 );
 
 router.get(
-  "/requests",
+  "/rentals/requests",
   auth(Role.LANDLORD),
-  landlordController.getPropertyRentReq,
+  landlordController.getRentalRequest,
+);
+
+router.get(
+  "/rentals/requests/:id",
+  auth(Role.LANDLORD),
+  landlordController.getSingleRentalRequest,
 );
 
 router.patch(
-  "/requests/:id",
+  "/rentals/requests/:id",
   auth(Role.LANDLORD),
-  landlordController.updateRentRequest,
-);
-router.delete(
-  "/requests/:id",
-  auth(Role.LANDLORD),
-  landlordController.deleteRentRequest,
+  landlordController.updateRentRequestStatus,
 );
 
 export const landlordRoute = router;
