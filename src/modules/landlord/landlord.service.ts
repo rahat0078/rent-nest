@@ -2,12 +2,31 @@ import { StatusCodes } from "http-status-codes";
 import AppError from "../../errors/appError";
 import { prisma } from "../../lib/prisma";
 import { TCreateProperty, TUpdateProperty } from "./landlord.interface";
-import { RentalRequestStatus } from "../../../generated/prisma/enums";
+import {
+  RentalRequestStatus,
+  UserStatus,
+} from "../../../generated/prisma/enums";
 
 const createPropertyIntoDB = async (
   payload: TCreateProperty,
   landlordId: string,
 ) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: landlordId,
+    },
+    select: {
+      status: true,
+    },
+  });
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "You are not authenticated");
+  }
+  if (user.status !== UserStatus.ACTIVE) {
+    (StatusCodes.FORBIDDEN, "Your account is not active");
+  }
+
   return await prisma.property.create({
     data: {
       landlordId,

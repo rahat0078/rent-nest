@@ -1,8 +1,8 @@
 model Category {
-    id          String @id @default(uuid())
-    name        String @unique @db.VarChar(255)
-    description String? @db.VarChar(255)
+  id          String     @id @default(uuid())
+  name        String     @unique @db.VarChar(255)
+  description String?    @db.VarChar(255)
+  property    Property[]
 
-    property Property[]
-    @@map("categories")
+  @@map("categories")
 }

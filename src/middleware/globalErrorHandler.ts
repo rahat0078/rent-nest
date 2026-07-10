@@ -33,6 +33,7 @@ export const globalErrorHandler = (
     err instanceof Prisma.PrismaClientInitializationError
   ) {
     const simplifiedError = handlePrismaError(err);
+    console.log(err)
 
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;

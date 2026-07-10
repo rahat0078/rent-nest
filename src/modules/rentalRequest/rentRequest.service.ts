@@ -2,13 +2,28 @@ import { StatusCodes } from "http-status-codes";
 import AppError from "../../errors/appError";
 import { prisma } from "../../lib/prisma";
 import { TCreateRentReq } from "./rentRequest.interface";
-import { RentalRequestStatus } from "../../../generated/prisma/enums";
+import {
+  RentalRequestStatus,
+  UserStatus,
+} from "../../../generated/prisma/enums";
 
 const createRentRequestIntoDB = async (
   tenantId: string,
   payload: TCreateRentReq,
 ) => {
   const { propertyId } = payload;
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: tenantId,
+    },
+    select: {
+      status: true,
+    },
+  });
+  if (user.status !== UserStatus.ACTIVE) {
+    (StatusCodes.FORBIDDEN, "Your account is not active");
+  }
+  
   const property = await prisma.property.findUniqueOrThrow({
     where: {
       id: propertyId,
@@ -34,8 +49,8 @@ const createRentRequestIntoDB = async (
       },
     },
     select: {
-      status: true
-    }
+      status: true,
+    },
   });
 
   if (existRequest) {
