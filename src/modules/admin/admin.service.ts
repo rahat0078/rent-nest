@@ -45,9 +45,10 @@ const updateUserStatusIntoDB = async (userId: string, status: UserStatus) => {
       id: userId,
     },
     data: {
-      status: status,
+      status: status
     },
   });
+  return updateStatus
 };
 
 const getAllPropertiesFromDB = async () => {
