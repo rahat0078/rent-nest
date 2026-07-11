@@ -72,9 +72,17 @@ const getMyAllPaymentHistory = catchAsync(
     });
   },
 );
-const getMySinglePayment = catchAsync(
-  async (req: Request, res: Response) => {},
-);
+const getMySinglePayment = catchAsync(async (req: Request, res: Response) => {
+  const tenantId = req.user.id;
+  const id = req.params.id
+  const payment = await paymentService.getMySinglePaymentFromDB(id as string, tenantId);
+  sendResponse(res, {
+    success: true,
+    successCode: StatusCodes.OK,
+    message: "Single Payment fetched successfully",
+    data: payment,
+  });
+});
 
 export const paymentController = {
   createPaymentCheckout,

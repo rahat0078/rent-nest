@@ -170,8 +170,8 @@ const getMyAllPaymentHistoryFromDB = async (tenantId: string) => {
   return await prisma.payment.findMany({
     where: {
       rentalRequest: {
-        tenantId: tenantId
-      }
+        tenantId: tenantId,
+      },
     },
     include: {
       rentalRequest: {
@@ -183,19 +183,58 @@ const getMyAllPaymentHistoryFromDB = async (tenantId: string) => {
               id: true,
               title: true,
               rentAmount: true,
-              images: true
+              images: true,
             },
-          }
-        }
+          },
+        },
       },
     },
     orderBy: {
-      createdAt: "desc"
-    }
-  })
+      createdAt: "desc",
+    },
+  });
 };
-const getMySinglePaymentFromDB = async () => {
-  // Get payment details
+const getMySinglePaymentFromDB = async (
+  paymentId: string,
+  tenantId: string,
+) => {
+  const payment = await prisma.payment.findUniqueOrThrow({
+    where: {
+      id: paymentId,
+    },
+    include: {
+      rentalRequest: {
+        select: {
+          id: true,
+          status: true,
+          tenantId: true,
+          property: {
+            select: {
+              id: true,
+              title: true,
+              rentAmount: true,
+              location: true,
+              landlord: {
+                select: {
+                  name: true,
+                  email: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (payment.rentalRequest.tenantId !== tenantId) {
+    throw new AppError(
+      StatusCodes.FORBIDDEN,
+      "You are not authorized to view this payment details",
+    );
+  }
+
+  return payment;
 };
 
 export const paymentService = {
