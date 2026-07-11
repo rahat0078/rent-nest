@@ -166,8 +166,33 @@ const createPaymentConfirmIntoDB = async (session: Stripe.Checkout.Session) => {
   });
 };
 
-const getMyAllPaymentHistoryFromDB = async () => {
-  // Get user's payment history
+const getMyAllPaymentHistoryFromDB = async (tenantId: string) => {
+  return await prisma.payment.findMany({
+    where: {
+      rentalRequest: {
+        tenantId: tenantId
+      }
+    },
+    include: {
+      rentalRequest: {
+        select: {
+          id: true,
+          status: true,
+          property: {
+            select: {
+              id: true,
+              title: true,
+              rentAmount: true,
+              images: true
+            },
+          }
+        }
+      },
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  })
 };
 const getMySinglePaymentFromDB = async () => {
   // Get payment details

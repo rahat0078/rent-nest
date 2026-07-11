@@ -63,7 +63,16 @@ const createPaymentConfirm = async (request: Request, response: Response) => {
 };
 
 const getMyAllPaymentHistory = catchAsync(
-  async (req: Request, res: Response) => {},
+  async (req: Request, res: Response) => {
+    const tenantId = req.user.id;
+    const payment = await paymentService.getMyAllPaymentHistoryFromDB(tenantId);
+     sendResponse(res, {
+    success: true,
+    successCode: StatusCodes.OK,
+    message: "Payment history fetched successfully",
+    data: payment,
+  });
+  },
 );
 const getMySinglePayment = catchAsync(
   async (req: Request, res: Response) => {},
