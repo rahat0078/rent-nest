@@ -12,6 +12,7 @@ import { categoryRoute } from "./modules/category/category.routes";
 import { globalErrorHandler } from "./middleware/globalErrorHandler";
 import { notFound } from "./middleware/notFound";
 import { reviewRoute } from "./modules/reviews/reviews.route";
+import { paymentController } from "./modules/payment/payment.controller";
 
 const app: Application = express();
 
@@ -20,6 +21,13 @@ app.use(
     origin: config.app_url,
     credentials: true,
   }),
+);
+
+
+app.post(
+  "/api/payments/confirm",
+  express.raw({ type: "application/json" }),
+  paymentController.createPaymentConfirm
 );
 
 app.use(express.json());

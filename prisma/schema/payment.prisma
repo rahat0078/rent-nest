@@ -2,10 +2,11 @@ model Payment {
   id              String        @id @default(uuid())
   amount          Int
   provider        Provider
-  transactionId   String
-  paymentMethod   String
+  transactionId   String?       @unique
+  paymentMethod   String?
+  checkoutUrl     String?
   status          PaymentStatus @default(PENDING)
-  paidAt          DateTime      @default(now())
+  paidAt          DateTime?
   rentalRequestId String        @unique
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
