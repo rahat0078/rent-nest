@@ -13,7 +13,7 @@ router.post(
   RequestValidator(rentRequestValidation.createRentRequest),
   rentRequestController.createRentReq,
 );
-router.get("/", auth(Role.TENANT), rentRequestController.getMyAllRentReq);
-router.get("/:id", auth(Role.TENANT), rentRequestController.getMySingleRentReq);
+router.get("/me", auth(Role.TENANT), rentRequestController.getMyAllRentReq);
+router.get("/me/:id", auth(Role.TENANT), rentRequestController.getMySingleRentReq);
 
 export const rentRequestRoute = router;
