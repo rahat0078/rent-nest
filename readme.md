@@ -3,7 +3,7 @@
 A RESTful backend for a house rental platform where landlords can list properties, tenants can request rentals, make payments using Stripe Checkout, and leave reviews.
 
 ### 🌐 Live URL
-*https://rentnest-api.vercel.app*
+*https://rent-nest-topaz.vercel.app/*
 
 ---
 
@@ -81,6 +81,13 @@ A RESTful backend for a house rental platform where landlords can list propertie
 | `POST` | `/api/reviews` | Tenant (Post-Stay) | Submit property review (Status: COMPLETED) |
 
 ---
+
+### API Documentation (Postman) | Format(json)
+``` 
+https://drive.google.com/file/d/19ZoRXilh6rq18lMrqVs18D4FqjDjTAXM/view?usp=sharing
+
+```
+
 
 ### 📦 Response Format
 
