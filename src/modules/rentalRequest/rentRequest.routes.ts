@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { rentRequestController } from "./rentRequest.controller";
-import { auth } from "../../middleware/auth.middleware";
+import { rentRequestController } from "./rentRequest.controller.js";
+import { auth } from "../../middleware/auth.middleware.js";
 import { Role } from "../../../generated/prisma/enums";
 import RequestValidator from "../../middleware/requestValidator";
 import { rentRequestValidation } from "./rentRequest.validation";
